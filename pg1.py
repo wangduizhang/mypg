@@ -6,6 +6,7 @@
 
 
 from translate import Translator
+import codecs
 
 result = ''
 translator= Translator(to_lang="zh")
@@ -23,8 +24,8 @@ for i, l in enumerate(lines):
     if i % 32 ==0:
         translation = translator.translate(l.strip()) #去除换行符,并将每行单独翻译
         result += translation
-
-with open('/User/wp/Desktop/字幕.txt','w') as files:
+        
+with codecs.open('/Users/wp/Desktop/字幕.txt','w','utf-8') as files:
     files.write(result)
 
 print '写入完成'    
