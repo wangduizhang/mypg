@@ -1,0 +1,1206 @@
+
+
+1
+00:00:00,415 --> 00:00:03,360
+PROFESSOR: We've now seen some examples of building classes, and
+
+2
+00:00:03,360 --> 00:00:06,730
+especially hierarchies in classes with inheritance.
+
+3
+00:00:06,730 --> 00:00:10,943
+Let's look at another example of using classes and get a sense of another way
+
+4
+00:00:10,943 --> 00:00:15,190
+in which classes provide us with a wonderful sense of abstraction of
+
+5
+00:00:15,190 --> 00:00:18,990
+bundling together methods and attributes into instances they could
+
+6
+00:00:18,990 --> 00:00:20,890
+be thought of as a coherent whole.
+
+7
+00:00:20,890 --> 00:00:23,870
+Here we're going to build a little class for your example of a gradebook,
+
+8
+00:00:23,870 --> 00:00:28,280
+that is a list of grades for a class, such as six00.
+
+9
+00:00:28,280 --> 00:00:30,990
+We're going to create a class that includes instances of other
+
+10
+00:00:30,990 --> 00:00:32,755
+classes within it.
+
+11
+00:00:32,755 --> 00:00:36,120
+And the idea is that we can simply build a data structure that can hold
+
+12
+00:00:36,120 --> 00:00:37,280
+grades for students.
+
+13
+00:00:37,280 --> 00:00:40,090
+We're going to gather together that data and procedures for dealing with
+
+14
+00:00:40,090 --> 00:00:43,190
+them into a single structure so that a user can manipulate them, without
+
+15
+00:00:43,190 --> 00:00:45,230
+having to know the internal details.
+
+16
+00:00:45,230 --> 00:00:48,390
+Well, we want to look at that idea to see how we might use it.
+
+17
+00:00:48,390 --> 00:00:50,436
+So we're going to build some code.
+
+18
+00:00:50,436 --> 00:00:52,650
+I'm going to walk you through it, pointing out key
+
+19
+00:00:52,650 --> 00:00:53,930
+highlights as we do it.
+
+20
+00:00:53,930 --> 00:00:56,850
+We're going to create a class called Grades.
+
+21
+00:00:56,850 --> 00:01:00,150
+The idea is this is a set of grades for a class.
+
+22
+00:01:00,150 --> 00:01:02,360
+And notice the specification up here.
+
+23
+00:01:02,360 --> 00:01:06,060
+It's "A mapping from students to the a list of grades." That is for every
+
+24
+00:01:06,060 --> 00:01:09,680
+student, we should be able to get back out a list of grades for that student
+
+25
+00:01:09,680 --> 00:01:11,440
+within this class.
+
+26
+00:01:11,440 --> 00:01:15,890
+To create an instance of a gradebook, we have an init method right there.
+
+27
+00:01:15,890 --> 00:01:17,730
+And it's going to do three things.
+
+28
+00:01:17,730 --> 00:01:20,040
+It's going to create a binding for students.
+
+29
+00:01:20,040 --> 00:01:22,626
+This is initially just an empty list.
+
+30
+00:01:22,626 --> 00:01:24,720
+It's going to create a binding for grades.
+
+31
+00:01:24,720 --> 00:01:28,410
+And well, the students are going to be a list of Student objects.
+
+32
+00:01:28,410 --> 00:01:30,830
+Ah, key thing there, Student objects.
+
+33
+00:01:30,830 --> 00:01:32,330
+It's not going to be just a set of names.
+
+34
+00:01:32,330 --> 00:01:36,280
+It's actually going to be a list of objects, instances of students, like
+
+35
+00:01:36,280 --> 00:01:38,000
+the things we built earlier.
+
+36
+00:01:38,000 --> 00:01:39,430
+Well, we're going to have a list of students.
+
+37
+00:01:39,430 --> 00:01:43,700
+The grades are actually going to be, as you can tell here, a dictionary.
+
+38
+00:01:43,700 --> 00:01:46,850
+And we're going to map from the ID number of a student
+
+39
+00:01:46,850 --> 00:01:48,280
+into a list of grades.
+
+40
+00:01:48,280 --> 00:01:52,050
+So in the dictionary, the keys will be ID numbers, which will
+
+41
+00:01:52,050 --> 00:01:54,350
+come from the students.
+
+42
+00:01:54,350 --> 00:01:57,095
+And associated with that key will be a list of grades.
+
+43
+00:01:57,095 --> 00:01:59,040
+We're going to have a third thing, which is a special
+
+44
+00:01:59,040 --> 00:02:00,320
+flag here called isSorted.
+
+45
+00:02:00,320 --> 00:02:03,040
+We're going to keep track of whether the students are sorted or not,
+
+46
+00:02:03,040 --> 00:02:04,120
+because we don't want to use that.
+
+47
+00:02:04,120 --> 00:02:06,970
+And so initially, we have an empty list of students.
+
+48
+00:02:06,970 --> 00:02:09,539
+By definition, they're sorted.
+
+49
+00:02:09,539 --> 00:02:12,330
+Once we got a gradebook, we need to add students to this book.
+
+50
+00:02:12,330 --> 00:02:14,350
+So we're going to have a method called addStudent.
+
+51
+00:02:14,350 --> 00:02:17,355
+We assume the student is of type Student.
+
+52
+00:02:17,355 --> 00:02:19,895
+Could be graduate, undergraduate, transfer student, as we saw from the
+
+53
+00:02:20,630 --> 00:02:22,342
+And we're going to add them in.
+
+54
+00:02:22,342 --> 00:02:24,290
+And notice, we can be careful here.
+
+55
+00:02:24,290 --> 00:02:26,310
+So the first thing we're going to do is check to see if the
+
+56
+00:02:26,310 --> 00:02:28,580
+student is in students.
+
+57
+00:02:28,580 --> 00:02:31,740
+And notice that Python automatically does this check for me.
+
+58
+00:02:31,740 --> 00:02:35,640
+self.students is a list of student instances.
+
+59
+00:02:35,640 --> 00:02:39,100
+Well, if the check of if student in self.students, we'll check to see if,
+
+60
+00:02:39,100 --> 00:02:42,410
+in fact, this particular instance is already in that list.
+
+61
+00:02:42,410 --> 00:02:45,180
+If it is, we're going to raise an error because we shouldn't have
+
+62
+00:02:45,180 --> 00:02:46,960
+duplicate entries for a student.
+
+63
+00:02:46,960 --> 00:02:48,800
+If not, notice what we do.
+
+64
+00:02:48,800 --> 00:02:50,020
+We got a new student.
+
+65
+00:02:50,020 --> 00:02:53,820
+We take the binding for students in the instance and append to it, since
+
+66
+00:02:53,820 --> 00:02:56,780
+we know it's a list right up there, simply append this student
+
+67
+00:02:56,780 --> 00:02:59,020
+to the end of it.
+
+68
+00:02:59,020 --> 00:03:03,640
+To get the corresponding element in the grades, we take the student and
+
+69
+00:03:03,640 --> 00:03:05,570
+get his or her ID number.
+
+70
+00:03:05,570 --> 00:03:08,440
+And notice, by the way, the open closed paren there.
+
+71
+00:03:08,440 --> 00:03:11,060
+Remember, getIdNum is the procedure.
+
+72
+00:03:11,060 --> 00:03:14,910
+So we say for the student, get the method getIdNum and call it.
+
+73
+00:03:14,910 --> 00:03:17,115
+That gives us back a number.
+
+74
+00:03:17,115 --> 00:03:22,170
+And then we index into grades, which is the dictionary with that number,
+
+75
+00:03:22,170 --> 00:03:25,100
+and store there an empty list of grades.
+
+76
+00:03:25,100 --> 00:03:28,690
+If this doesn't make sense to you, go try an example like this carefully
+
+77
+00:03:29,410 --> 00:03:34,420
+But you'll see that, in fact, by using the Student, which is an instance, we
+
+78
+00:03:34,420 --> 00:03:40,120
+then use the method associated with Student to get out an ID number.
+
+79
+00:03:40,120 --> 00:03:44,750
+And then we go into the dictionary and store that key for the dictionary and
+
+80
+00:03:45,560 --> 00:03:48,360
+And of course, since we've added a student into this collection, we
+
+81
+00:03:48,360 --> 00:03:49,820
+automatically-- or not automatically.
+
+82
+00:03:49,820 --> 00:03:54,040
+But we carefully set the isSorted flag to be false because, in fact, we have
+
+83
+00:03:54,040 --> 00:03:56,600
+no guarantee that they are sorted anymore.
+
+84
+00:03:56,600 --> 00:03:58,750
+Once we've got a student, what else do we want to do?
+
+85
+00:03:58,750 --> 00:04:01,490
+Well, we'd like to add in grades for a student.
+
+86
+00:04:01,490 --> 00:04:05,385
+So we got a method called addGrade that takes a student and a grade.
+
+87
+00:04:05,385 --> 00:04:07,090
+Again, assumes a grade is a float.
+
+88
+00:04:07,090 --> 00:04:08,790
+It also assumes a student is an instance of a student.
+
+89
+00:04:08,790 --> 00:04:12,690
+And we're going to add that to the list of grades for this student.
+
+90
+00:04:12,690 --> 00:04:15,560
+Notice again, we can use some nice elegance of Python here using these
+
+91
+00:04:16,500 --> 00:04:20,050
+So try basically says,-- and let's look at this carefully--
+
+92
+00:04:20,050 --> 00:04:23,340
+take the student, which is an instance.
+
+93
+00:04:25,020 --> 00:04:27,710
+And since it's a method, call it using the open paren.
+
+94
+00:04:27,710 --> 00:04:30,940
+That gives us back an int.
+
+95
+00:04:30,940 --> 00:04:35,595
+We then index into grades, at least that version of it, there into the
+
+96
+00:04:35,595 --> 00:04:39,890
+grades for this particular instance of the gradebook at that point.
+
+97
+00:04:39,890 --> 00:04:41,550
+We know that should be a list.
+
+98
+00:04:41,550 --> 00:04:44,180
+And so we append to that list a new grade.
+
+99
+00:04:44,180 --> 00:04:45,360
+And that's really cool.
+
+100
+00:04:45,360 --> 00:04:48,455
+Because very concisely now, we're simply given a student.
+
+101
+00:04:48,455 --> 00:04:49,620
+We get out their ID number.
+
+102
+00:04:49,620 --> 00:04:53,680
+We go into the dictionary, pull up the grades, ad something to the end of it.
+
+103
+00:04:53,680 --> 00:04:56,470
+And notice, we're using a try-except variation here, because we're going to
+
+104
+00:04:56,470 --> 00:04:57,880
+do that unless we get an error.
+
+105
+00:04:57,880 --> 00:05:02,170
+And if we get an error, we're going to raise a values error basically saying
+
+106
+00:05:02,170 --> 00:05:03,650
+student was not in the gradebook.
+
+107
+00:05:03,650 --> 00:05:06,160
+You've tried to add a grade to somebody who's not here.
+
+108
+00:05:06,160 --> 00:05:09,160
+Once we can add grades, we can get grades back out.
+
+109
+00:05:09,160 --> 00:05:11,475
+And we do basically the same thing.
+
+110
+00:05:11,475 --> 00:05:14,040
+We're going to use the instance of the student.
+
+111
+00:05:14,040 --> 00:05:16,150
+Know that's a particular object.
+
+112
+00:05:16,150 --> 00:05:19,950
+We're going to get the ID number out and then go into the grade book and
+
+113
+00:05:19,950 --> 00:05:23,880
+look at that point to extract out the list of grades.
+
+114
+00:05:23,880 --> 00:05:26,510
+And here, we got this funky little thing at the end because we're just
+
+115
+00:05:26,510 --> 00:05:29,150
+going to return a copy of the student's grades, rather then the
+
+116
+00:05:29,150 --> 00:05:30,340
+actual grades themselves.
+
+117
+00:05:30,340 --> 00:05:33,100
+We don't want to end up accidentally messing around with the grades and
+
+118
+00:05:33,820 --> 00:05:36,230
+We're simply going to return a copy of the grades.
+
+119
+00:05:36,230 --> 00:05:40,100
+And again, a try-except kind of a situation here where if it doesn't
+
+120
+00:05:40,100 --> 00:05:43,010
+work, we're going to raise a value error saying that the student was not
+
+121
+00:05:43,765 --> 00:05:46,120
+Let's take a breath for a second and look at this.
+
+122
+00:05:46,120 --> 00:05:49,280
+I'm building a fairly complicated piece of structure.
+
+123
+00:05:49,280 --> 00:05:51,820
+And notice how simply I can do it.
+
+124
+00:05:51,820 --> 00:05:55,880
+Because I'm dealing with objects buried inside of another object, I
+
+125
+00:05:55,880 --> 00:05:59,440
+suppressed a lot of the detail about what a student looks like.
+
+126
+00:05:59,440 --> 00:06:02,900
+All I need to know is what are the methods that access it, in particular,
+
+127
+00:06:02,900 --> 00:06:05,180
+getting out the ID number.
+
+128
+00:06:05,180 --> 00:06:08,500
+And already, I built out a fair amount of complexity.
+
+129
+00:06:08,500 --> 00:06:09,835
+Let's add one more thing.
+
+130
+00:06:10,600 --> 00:06:12,250
+I want to get out all of the students.
+
+131
+00:06:12,250 --> 00:06:14,420
+So we'd like to get out a list of all the students
+
+132
+00:06:14,420 --> 00:06:17,330
+that are in the gradebook.
+
+133
+00:06:17,330 --> 00:06:19,120
+Here, we can be careful.
+
+134
+00:06:19,120 --> 00:06:24,566
+So we're going to first look at that flag to say, because that's how we're
+
+135
+00:06:24,566 --> 00:06:26,850
+storing them, is the list of students sorted?
+
+136
+00:06:26,850 --> 00:06:30,080
+If it is, I'll just return a copy of it.
+
+137
+00:06:30,080 --> 00:06:34,770
+Notice again that square bracket colon close square bracket, saying get a
+
+138
+00:06:34,770 --> 00:06:37,370
+copy of self.students.
+
+139
+00:06:37,370 --> 00:06:39,240
+Remember what the self.students do.
+
+140
+00:06:39,240 --> 00:06:42,010
+It points to the list of students.
+
+141
+00:06:42,010 --> 00:06:47,450
+If, in fact, they're not sorted, then I'll sort them by taking students out
+
+142
+00:06:47,450 --> 00:06:52,660
+of self, which is that list, using a method associated with lists.
+
+143
+00:06:52,660 --> 00:06:56,130
+Notice the open closed paren to call that method on it.
+
+144
+00:06:56,130 --> 00:06:59,690
+And having done that, I'll simply change the flag.
+
+145
+00:06:59,690 --> 00:07:02,600
+And of course, having done all of that, I'll fall through to the return
+
+146
+00:07:02,600 --> 00:07:06,330
+and return a list of or either a copy of the list of students.
+
+147
+00:07:06,990 --> 00:07:08,740
+I've now got a gradebook.
+
+148
+00:07:08,740 --> 00:07:13,420
+Having built that structure, I can use it, and if I can use it without
+
+149
+00:07:13,420 --> 00:07:16,820
+knowing any of the internal details, which is really one of things I would
+
+150
+00:07:16,820 --> 00:07:18,180
+like to have.
+
+151
+00:07:18,180 --> 00:07:20,360
+So I can now write a procedure.
+
+152
+00:07:20,360 --> 00:07:22,730
+Notice, procedure, not class.
+
+153
+00:07:22,730 --> 00:07:27,050
+This is a procedure called gradeReport that takes as input an
+
+154
+00:07:27,050 --> 00:07:28,815
+instance of a gradebook.
+
+155
+00:07:28,815 --> 00:07:31,950
+It assumes that course is of type grades.
+
+156
+00:07:31,950 --> 00:07:33,330
+And what would I like to do here?
+
+157
+00:07:33,330 --> 00:07:37,920
+Well, very simply, I'd like to simply create a list of the grades for all
+
+158
+00:07:37,920 --> 00:07:39,330
+the students in the class.
+
+159
+00:07:39,330 --> 00:07:43,520
+So I set up an initial list or report, which is empty.
+
+160
+00:07:43,520 --> 00:07:45,220
+And then, notice what I do here.
+
+161
+00:07:45,220 --> 00:07:49,520
+I'm taking the course, which I know is one of these objects.
+
+162
+00:07:49,520 --> 00:07:50,730
+It's an instance of an object.
+
+163
+00:07:50,730 --> 00:07:54,180
+And I simply call the allStudents method of it, which gives me back, as
+
+164
+00:07:54,180 --> 00:07:59,500
+we just saw, a list or a copy of the list of all the students.
+
+165
+00:07:59,500 --> 00:08:03,075
+And then for every student in that list of students, I
+
+166
+00:08:03,820 --> 00:08:05,815
+And the loop's pretty straightforward.
+
+167
+00:08:05,815 --> 00:08:09,220
+For each student, I set the total to 0, the number of grades to 0.
+
+168
+00:08:09,220 --> 00:08:11,310
+I want to get an average grade out of all of this.
+
+169
+00:08:11,310 --> 00:08:15,350
+And then for every grade in that set of grades, I'm going to do something.
+
+170
+00:08:15,350 --> 00:08:17,210
+So notice again, what am I doing?
+
+171
+00:08:17,210 --> 00:08:19,140
+I'm taking in the course.
+
+172
+00:08:19,140 --> 00:08:22,500
+I'm using the method getGrades for this student.
+
+173
+00:08:22,500 --> 00:08:23,962
+You've already seen what that is doing.
+
+174
+00:08:23,962 --> 00:08:27,520
+It's going to take that instance of student, get its ID number, use that
+
+175
+00:08:27,520 --> 00:08:31,580
+to index into the dictionary of grades for this course, and get
+
+176
+00:08:31,580 --> 00:08:32,935
+back a list of grades.
+
+177
+00:08:32,935 --> 00:08:35,260
+And then looking over those, for every grade there, I'm
+
+178
+00:08:35,260 --> 00:08:36,754
+simply adding them up.
+
+179
+00:08:36,754 --> 00:08:38,240
+I'm adding to the total.
+
+180
+00:08:38,240 --> 00:08:39,919
+I'm adding to the number of grades.
+
+181
+00:08:39,919 --> 00:08:43,140
+When I'm done with all of that, for all of the grades, I just want to do
+
+182
+00:08:43,140 --> 00:08:44,470
+the average of.
+
+183
+00:08:44,470 --> 00:08:46,830
+Well again, I got one of these exception handling things.
+
+184
+00:08:46,830 --> 00:08:49,940
+I'm going to get an average of the total over the number of grades.
+
+185
+00:08:49,940 --> 00:08:56,690
+Then I'm going add to the report some information about it, unless I get a
+
+186
+00:08:57,410 --> 00:08:58,780
+And then I'm just going to report that
+
+187
+00:08:59,440 --> 00:09:02,230
+So notice in this case, I'm not going to throw an error.
+
+188
+00:09:02,230 --> 00:09:03,685
+I'm going to handle it.
+
+189
+00:09:03,685 --> 00:09:05,030
+Now, report was a list.
+
+190
+00:09:05,030 --> 00:09:06,150
+I'm just appending to it.
+
+191
+00:09:06,150 --> 00:09:07,670
+Basically, I'm going to do all of that.
+
+192
+00:09:07,670 --> 00:09:09,920
+And then when I'm done at the end, I'm going to have a little funky thing
+
+193
+00:09:09,920 --> 00:09:11,410
+here, which you go trial.
+
+194
+00:09:11,410 --> 00:09:16,140
+But it's basically going to insert a return into the report so that I have
+
+195
+00:09:16,140 --> 00:09:17,830
+something that prints out in a nice way.
+
+196
+00:09:17,830 --> 00:09:21,980
+Key thing I want you to notice here is the use of abstraction.
+
+197
+00:09:21,980 --> 00:09:27,360
+Knowing that I have a class called a course or grades report, I can--
+
+198
+00:09:28,135 --> 00:09:32,810
+I have a class or a set of grades, a gradebook, I can write method, a
+
+199
+00:09:32,810 --> 00:09:36,760
+procedure that operates on that without knowing any of details inside.
+
+200
+00:09:36,760 --> 00:09:41,740
+All of my accesses are through the methods of the course, there and right
+
+201
+00:09:41,740 --> 00:09:46,500
+there, or through the methods of the student itself.
+
+202
+00:09:46,500 --> 00:09:50,540
+And that means I'm separating out the internals of this particular
+
+203
+00:09:50,540 --> 00:09:52,060
+structures from the use of it.
+
+204
+00:09:52,060 --> 00:09:54,190
+A really nice use of abstraction.
+
+205
+00:09:54,190 --> 00:09:57,380
+In just a few procedures, I've written a class with a fair deal of
+
+206
+00:09:58,210 --> 00:10:01,460
+That class has objects or instances of objects inside of it.
+
+207
+00:10:01,460 --> 00:10:05,100
+And I've written a procedure that then can actually deal with it.
+
+208
+00:10:05,100 --> 00:10:06,850
+Let's look at what happened if we actually used it.
+
+209
+00:10:06,850 --> 00:10:11,930
+So I've created a little set of examples here, three undergraduates,
+
+210
+00:10:11,930 --> 00:10:14,390
+different classes, just a couple of grad students.
+
+211
+00:10:14,390 --> 00:10:19,880
+And I've created a gradebook right there, for six00.
+
+212
+00:10:19,880 --> 00:10:22,350
+I've added a set of students into it.
+
+213
+00:10:22,350 --> 00:10:24,730
+And then I just arbitrarily put some grades in there.
+
+214
+00:10:24,730 --> 00:10:26,560
+I've added some grades in so I can see them.
+
+215
+00:10:26,560 --> 00:10:29,370
+And then, of course, I could add another student afterwards to all of
+
+216
+00:10:29,370 --> 00:10:30,750
+this piece.
+
+217
+00:10:30,750 --> 00:10:35,000
+Having built all of those pieces, I can actually look at different things
+
+218
+00:10:35,000 --> 00:10:37,090
+that I might use inside of there.
+
+219
+00:10:37,090 --> 00:10:38,590
+So I've done that over here.
+
+220
+00:10:38,590 --> 00:10:43,770
+And let me now go to my particular structure.
+
+221
+00:10:43,770 --> 00:10:45,150
+I want to load this up.
+
+222
+00:10:45,150 --> 00:10:49,830
+So I'm going to, in fact, load that into my structure there.
+
+223
+00:10:49,830 --> 00:10:51,230
+I could look at different elements here.
+
+224
+00:10:51,230 --> 00:10:53,810
+So I created ug1, so I can see what that--
+
+225
+00:10:53,810 --> 00:10:56,815
+Oops, sorry. ug1, I can see what that looks like.
+
+226
+00:10:56,815 --> 00:10:59,110
+I can print ug1.
+
+227
+00:10:59,110 --> 00:11:01,170
+And it's got the things I've had before.
+
+228
+00:11:01,170 --> 00:11:02,380
+Name is Jane Doe.
+
+229
+00:11:02,380 --> 00:11:06,450
+I've brought six00, which is a class.
+
+230
+00:11:06,450 --> 00:11:09,876
+I can actually try and print six00.
+
+231
+00:11:09,876 --> 00:11:12,705
+And it's simply going to give me the same thing, because I did not create a
+
+232
+00:11:12,705 --> 00:11:14,710
+particular thing inside of there.
+
+233
+00:11:14,710 --> 00:11:18,480
+But I can now do things like say, gee, I'd like to look at the gradeReport.
+
+234
+00:11:18,480 --> 00:11:24,442
+So let me print out the gradeReport of six00.
+
+235
+00:11:24,442 --> 00:11:25,560
+And there we go.
+
+236
+00:11:25,560 --> 00:11:28,342
+It has actually printed out a report.
+
+237
+00:11:28,342 --> 00:11:32,130
+That report came from the code that we just looked at.
+
+238
+00:11:32,130 --> 00:11:33,560
+Because what does gradeReport do?
+
+239
+00:11:33,560 --> 00:11:37,520
+It created a structure that had information about each student and
+
+240
+00:11:37,520 --> 00:11:38,605
+their average grade.
+
+241
+00:11:38,605 --> 00:11:40,040
+And I've just pulled it off there.
+
+242
+00:11:40,040 --> 00:11:44,430
+And in fact, notice, they're also in sorted order by both last name and
+
+243
+00:11:44,430 --> 00:11:47,560
+first name, which is exactly what I would like.
+
+244
+00:11:47,560 --> 00:11:51,910
+I've done that of having this fairly complex system, but nice levels of
+
+245
+00:11:51,910 --> 00:11:53,860
+abstraction inside of it.
+
+246
+00:11:53,860 --> 00:11:56,590
+Now, let's look at a couple of other things that we might think about here.
+
+247
+00:11:56,590 --> 00:11:58,910
+And in particular, let's think about the quality.
+
+248
+00:11:58,910 --> 00:12:02,400
+I could list all of the students using the following command.
+
+249
+00:12:03,380 --> 00:12:04,880
+But let me actually type it in here.
+
+250
+00:12:04,880 --> 00:12:11,620
+For every student in six00, allStudents.
+
+251
+00:12:11,620 --> 00:12:14,630
+Again notice, allStudents is a method I've got open closed.
+
+252
+00:12:14,630 --> 00:12:15,630
+So you call that method.
+
+253
+00:12:15,630 --> 00:12:18,810
+That gives me back that list that I've created inside of there.
+
+254
+00:12:18,810 --> 00:12:22,050
+And I could say, print them out.
+
+255
+00:12:22,050 --> 00:12:24,240
+And in fact, it does exactly that.
+
+256
+00:12:24,240 --> 00:12:28,560
+It prints, in this case, the list of student names sorted by ID number.
+
+257
+00:12:28,560 --> 00:12:29,740
+That's great.
+
+258
+00:12:29,740 --> 00:12:31,930
+Now, why not just do the following?
+
+259
+00:12:31,930 --> 00:12:35,890
+Why not just say, for s in six00.students.
+
+260
+00:12:35,890 --> 00:12:38,140
+Remember, students is that list of students.
+
+261
+00:12:38,140 --> 00:12:41,730
+Why not just do print on that?
+
+262
+00:12:41,730 --> 00:12:43,440
+And it does the same thing.
+
+263
+00:12:43,440 --> 00:12:44,900
+So are they the same?
+
+264
+00:12:44,900 --> 00:12:47,740
+Well, the answer is, they're getting out the same kind of information.
+
+265
+00:12:47,740 --> 00:12:53,250
+But this, I don't want to do, because it violates the data hiding
+
+266
+00:12:53,250 --> 00:12:55,180
+aspect of an object.
+
+267
+00:12:55,180 --> 00:12:57,450
+It really exposes the internal representation.
+
+268
+00:12:57,450 --> 00:12:59,590
+And I should not be relying on that.
+
+269
+00:12:59,590 --> 00:13:03,730
+In particular, if I were to change how I want to represent a gradebook, I
+
+270
+00:13:03,730 --> 00:13:08,340
+should only need to change the methods within the class definition, not any
+
+271
+00:13:08,340 --> 00:13:10,395
+external procedures that use it.
+
+272
+00:13:10,395 --> 00:13:11,540
+And that's nice.
+
+273
+00:13:11,540 --> 00:13:16,180
+Because now it says, if I do that, then my gradeReport will still work
+
+274
+00:13:16,180 --> 00:13:19,970
+properly if I simply change things inside of the internal structure.
+
+275
+00:13:19,970 --> 00:13:22,960
+On the other hand, if I'm doing things like this where I'm directly accessing
+
+276
+00:13:22,960 --> 00:13:27,160
+the internal representation of the object, that's a real problem.
+
+277
+00:13:27,160 --> 00:13:30,070
+Because we said earlier, Python doesn't block you from doing this.
+
+278
+00:13:30,070 --> 00:13:33,760
+We rely on you showing good cleanliness in your code.
+
+279
+00:13:33,760 --> 00:13:37,110
+Other object oriented programming languages actually prevent you from
+
+280
+00:13:37,110 --> 00:13:38,900
+doing this, which has some advantages.
+
+281
+00:13:38,900 --> 00:13:42,160
+Although, here it's still nice to be able to get at those pieces.
+
+282
+00:13:42,160 --> 00:13:45,170
+So let's look at some comments here of what we've got.
+
+283
+00:13:45,170 --> 00:13:48,320
+This example very nicely separates out the collection of data
+
+284
+00:13:48,320 --> 00:13:50,010
+from the use of data.
+
+285
+00:13:50,010 --> 00:13:53,510
+The collection of data all happens through the methods associated with
+
+286
+00:13:53,510 --> 00:13:56,730
+that class object, that gradeReport object.
+
+287
+00:13:56,730 --> 00:13:59,800
+Writing procedures that handle it did not worry about the internal.
+
+288
+00:13:59,800 --> 00:14:03,650
+Simply used the methods associated with the class to get at that.
+
+289
+00:14:03,650 --> 00:14:07,070
+And that's really nice, that access is through methods associated with the
+
+290
+00:14:08,022 --> 00:14:11,250
+On the other hand, this current version is actually pretty
+
+291
+00:14:11,250 --> 00:14:12,360
+inefficient.
+
+292
+00:14:12,360 --> 00:14:16,690
+To get a list of all students, I create a copy of the internal list
+
+293
+00:14:16,690 --> 00:14:19,100
+that lets me manipulate the things without changing
+
+294
+00:14:19,100 --> 00:14:20,325
+the internal structure.
+
+295
+00:14:20,325 --> 00:14:22,560
+And if I got a class here at MIT of just a few hundred
+
+296
+00:14:22,560 --> 00:14:24,120
+students, that's nice.
+
+297
+00:14:24,120 --> 00:14:27,630
+But if I'm talking about a MOOC with 100,000 students,
+
+298
+00:14:27,630 --> 00:14:28,960
+that's pretty expensive.
+
+299
+00:14:28,960 --> 00:14:32,130
+And in the next segment, we're going to look at how we can actually fix
+
+300
+00:14:32,130 --> 00:14:33,380
+that inefficiency.
+
+301
+00:14:33,380 --> 00:14:35,234
+
+
